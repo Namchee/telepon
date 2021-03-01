@@ -1,0 +1,31 @@
+{
+  "name": "namchee-boilerplate",
+  "version": "1.0.0",
+  "description": "A simple boilerplate with namchee's style",
+  "main": "index.js",
+  "scripts": {
+    "test": "ECHO: Do not test this, duh",
+    "refresh": "rm -rf node_modules/ dist/ build/ && npm i",
+    "postuninstall": "npm prune"
+  },
+  "keywords": [
+    "boilerplate",
+    "eslint",
+    "typescript"
+  ],
+  "author": "Namchee",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.19.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jsdoc": "^31.6.1",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^4.0.5",
+    "typesync": "^0.8.0"
+  }
+}
