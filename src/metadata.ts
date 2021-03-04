@@ -292,6 +292,112 @@ export const PREFIX_TELEPON = {
 };
 
 // Daftar prefix nomor telepon seluler
-export const PREFIX_SELULER = {
+export const PREFIX_CARD = {
+  'IM3 Ooredoo': [
+    '0814',
+    '0815',
+    '0816',
+    '0855',
+    '0856',
+    '0857',
+    '0858',
+  ],
+  'Net1': [
+    '0827',
+    '0828',
+  ],
+  'kartuHALO': [
+    '0811',
+    '0812',
+  ],
+  'simPATI': [
+    '0812',
+    '0813',
+    '0821',
+  ],
+  'LOOP': [
+    '0822',
+  ],
+  'kartu As': [
+    '0823',
+    '0852',
+    '0853',
+  ],
+  'by.U': [
+    '0851',
+  ],
+  'XL Postpaid': [
+    '0817',
+    '0818',
+    '0819',
+  ],
+  'XL Prioritas': [
+    '0877',
+    '0878',
+  ],
+  'XL Prepaid': [
+    '0817',
+    '0818',
+    '0819',
+    '0859',
+    '0877',
+    '0878',
+  ],
+  'AXIS': [
+    '0831',
+    '0832',
+    '0833',
+    '0838',
+  ],
+  'Smartfren': [
+    '0881',
+    '0882',
+    '0883',
+    '0884',
+    '0885',
+    '0886',
+    '0887',
+    '0888',
+  ],
+  'Switch': [
+    '0889',
+  ],
+  '3': [
+    '0895',
+    '0896',
+    '0897',
+    '0898',
+    '0899',
+  ],
+  'Hinet': [
+    '082',
+    '087',
+  ],
+};
 
+export const CARD_PROVIDER = {
+  'PT Indosat': ['IM3'],
+  'PT Telkomsel': [
+    'kartuHALO',
+    'simPATI',
+    'LOOP',
+    'kartu AS',
+    'by.U',
+  ],
+  'PT XL Axiata': [
+    'XL Postpaid',
+    'XL Prepaid',
+    'XL Prioritas',
+    'AXIS',
+  ],
+  'PT Smartfren Telecom': [
+    'Smartfren',
+    'Switch',
+  ],
+  'PT Hutchison 3 Indonesia': [
+    '3',
+  ],
+  'PT Berca Hardayaperkasa': [
+    'Hinet',
+  ],
 };
