@@ -1,10 +1,10 @@
 {
-  "name": "namchee-boilerplate",
+  "name": "@namchee/telepon",
   "version": "1.0.0",
   "description": "A simple boilerplate with namchee's style",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "ECHO: Do not test this, duh",
+    "test": "jest",
     "refresh": "rm -rf node_modules/ dist/ build/ && npm i",
     "postuninstall": "npm prune"
   },

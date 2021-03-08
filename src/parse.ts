@@ -1,5 +1,6 @@
 import { AmbiguousNumberException } from './exceptions/ambiguous';
-import { Telepon } from './telepon';
+import { NOMOR_DARURAT } from './metadata';
+import { EmergencyService, Telepon } from './telepon';
 
 /**
  * Attempt to parse a telephone number from the provided string.
@@ -13,13 +14,25 @@ import { Telepon } from './telepon';
 export function parse(tel: string, safe: boolean = true): Telepon {
   let input: string = tel.replace(/[^\d]+/g, '');
 
-  if (!input.startsWith('0') || !input.startsWith('62')) {
+  for (const [nomor, deskripsi] of Object.entries(NOMOR_DARURAT)) {
+    if (input === nomor) {
+      const emergency: EmergencyService = {
+        type: 'emergency',
+        originalNumber: input,
+        description: deskripsi,
+      };
+
+      return emergency;
+    }
+  }
+
+  if (!input.startsWith('0') && !input.startsWith('62')) {
     if (safe) {
       throw new AmbiguousNumberException();
+    } else {
+      // eslint-disable-next-line
+      console.warn('[WARN]: Telephone number doesn\'t start with expected prefix. Parsing capabilities will be limited and may cause invalid validation.');
     }
-
-    // eslint-disable-next-line
-    console.warn('[WARN]: Telephone number doesn\'t start with expected prefix. Parsing capabilities will be limited and may cause invalid validation.');
   }
 
   if (input.startsWith('62')) {
@@ -28,6 +41,6 @@ export function parse(tel: string, safe: boolean = true): Telepon {
 
   return {
     type: 'fixed',
-    originalNumber: '',
+    originalNumber: input,
   };
 }
