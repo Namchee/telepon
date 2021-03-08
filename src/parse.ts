@@ -5,14 +5,21 @@ import { Telepon } from './telepon';
  * Attempt to parse a telephone number from the provided string.
  *
  * @param {string} tel - a string containing telephone number
- * @returns {Telepon} - a parsed telephone number with metadata
+ * @param {boolean?} safe - determine if the parsing process
+ * should only be done when the input is unambiguous. Defaults to `true`
+ * @returns {Telepon} - parsed input as telephone number with metadata
  * information
  */
-export function parse(tel: string): Telepon {
+export function parse(tel: string, safe: boolean = true): Telepon {
   let input: string = tel.replace(/[^\d]+/g, '');
 
   if (!input.startsWith('0') || !input.startsWith('62')) {
-    throw new AmbiguousNumberException();
+    if (safe) {
+      throw new AmbiguousNumberException();
+    }
+
+    // eslint-disable-next-line
+    console.warn('[WARN]: Telephone number doesn\'t start with expected prefix. Parsing capabilities will be limited and may cause invalid validation.');
   }
 
   if (input.startsWith('62')) {

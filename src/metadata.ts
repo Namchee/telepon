@@ -5,6 +5,7 @@ export const NOMOR_DARURAT = {
   '113': 'Pemadam Kebakaran',
   '115': 'SAR',
   '118': 'Ambulans',
+  '119': 'Kegawatdaruratan Kesehatan',
 };
 
 // Daftar prefix untuk nomor telepon

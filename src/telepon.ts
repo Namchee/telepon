@@ -1,5 +1,5 @@
 export interface Telepon {
-  readonly type: 'fixed' | 'mobile';
+  readonly type: 'fixed' | 'mobile' | 'emergency';
   readonly originalNumber: string;
 }
 
