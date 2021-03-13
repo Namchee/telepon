@@ -5,8 +5,8 @@ export interface Telepon {
 
 export interface FixedTelepon extends Telepon {
   readonly type: 'fixed';
-  readonly region: string;
-  readonly area: number;
+  readonly region: string[] | null;
+  readonly area: number | null;
 }
 
 export interface MobileTelepon extends Telepon {

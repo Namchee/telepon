@@ -1,30 +1,35 @@
 import { AmbiguousNumberException } from './exceptions/ambiguous';
-import { NOMOR_DARURAT } from './metadata';
-import { EmergencyService, Telepon } from './telepon';
+import { InvalidNumberException } from './exceptions/invalid';
+import {
+  CARD_PROVIDER,
+  NOMOR_DARURAT,
+  PREFIX_CARD,
+  PREFIX_TELEPON,
+} from './metadata';
+import {
+  EmergencyService,
+  FixedTelepon,
+  MobileTelepon,
+  Telepon,
+} from './telepon';
 
 /**
  * Attempt to parse a telephone number from the provided string.
  *
- * @param {string} tel - a string containing telephone number
- * @param {boolean?} safe - determine if the parsing process
+ * @param {string} tel a string containing telephone number
+ * @param {boolean?} safe determine if the parsing process
  * should only be done when the input is unambiguous. Defaults to `true`
- * @returns {Telepon} - parsed input as telephone number with metadata
+ * @returns {Telepon} parsed input as telephone number with metadata
  * information
  */
 export function parse(tel: string, safe: boolean = true): Telepon {
-  let input: string = tel.replace(/[^\d]+/g, '');
+  const emergencyNumber = isEmergencyLine(tel);
 
-  for (const [nomor, deskripsi] of Object.entries(NOMOR_DARURAT)) {
-    if (input === nomor) {
-      const emergency: EmergencyService = {
-        type: 'emergency',
-        originalNumber: input,
-        description: deskripsi,
-      };
-
-      return emergency;
-    }
+  if (emergencyNumber) {
+    return emergencyNumber;
   }
+
+  let input: string = tel.replace(/[^\d]+/g, '');
 
   if (!input.startsWith('0') && !input.startsWith('62')) {
     if (safe) {
@@ -39,8 +44,104 @@ export function parse(tel: string, safe: boolean = true): Telepon {
     input = input.replace(/^62/, '0');
   }
 
-  return {
-    type: 'fixed',
-    originalNumber: input,
-  };
+  const fixedNumber = isFixedLine(tel, safe);
+
+  if (fixedNumber) {
+    return fixedNumber;
+  }
+
+  const mobileNumber = isMobileNumber(tel);
+
+  if (mobileNumber) {
+    return mobileNumber;
+  }
+
+  throw new InvalidNumberException();
+}
+
+/**
+ * Check if the supplied number is an emergency service number
+ *
+ * @param {string} tel telephone number
+ * @returns {EmergencyService | null} an object that describes
+ * the emergency service, `null` otherwise
+ */
+function isEmergencyLine(tel: string): EmergencyService | null {
+  for (const [nomor, deskripsi] of Object.entries(NOMOR_DARURAT)) {
+    if (tel === nomor) {
+      const emergency: EmergencyService = {
+        type: 'emergency',
+        originalNumber: tel,
+        description: deskripsi,
+      };
+
+      return emergency;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Check if the supplied number is an fixed line telephone number
+ *
+ * @param {string} tel telephone number
+ * @param {boolean} safe determine if the parsing process
+ * should only be done when the input is unambiguous. Defaults to `true`
+ * @returns {FixedTelepon | null} an object that describes
+ * the number, `null` otherwise
+ */
+function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
+  for (const [prefix, region] of Object.entries(PREFIX_TELEPON)) {
+    if (tel.startsWith(prefix)) {
+      return {
+        type: 'fixed',
+        originalNumber: tel,
+        area: Number(prefix[1]),
+        region,
+      };
+    }
+  }
+
+  if (!safe && [7, 8, 9].includes(tel.length)) {
+    return {
+      type: 'fixed',
+      originalNumber: tel,
+      area: null,
+      region: null,
+    };
+  }
+
+  return null;
+}
+
+/**
+ * Check if the supplied number is an mobile telephone number
+ *
+ * @param {string} tel telephone number
+ * @returns {MobileTelepon | null} an object that describes
+ * the number, `null` otherwise
+ */
+function isMobileNumber(tel: string): MobileTelepon | null {
+  for (const [card, prefixes] of Object.entries(PREFIX_CARD)) {
+    if (prefixes.some(prefix => tel.startsWith(prefix))) {
+      let providerName!: string;
+
+      for (const [provider, cards] of Object.entries(CARD_PROVIDER)) {
+        if (cards.some(cardName => cardName === card)) {
+          providerName = provider;
+          break;
+        }
+      }
+
+      return {
+        type: 'mobile',
+        originalNumber: tel,
+        card,
+        provider: providerName,
+      };
+    }
+  }
+
+  return null;
 }
