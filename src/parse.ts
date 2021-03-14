@@ -44,16 +44,10 @@ export function parse(tel: string, safe: boolean = true): Telepon {
     input = input.replace(/^62/, '0');
   }
 
-  const fixedNumber = isFixedLine(tel, safe);
+  const number = isFixedLine(tel, safe) ?? isMobileNumber(tel);
 
-  if (fixedNumber) {
-    return fixedNumber;
-  }
-
-  const mobileNumber = isMobileNumber(tel);
-
-  if (mobileNumber) {
-    return mobileNumber;
+  if (number) {
+    return number;
   }
 
   throw new InvalidNumberException();
@@ -93,7 +87,15 @@ function isEmergencyLine(tel: string): EmergencyService | null {
  */
 function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
   for (const [prefix, region] of Object.entries(PREFIX_TELEPON)) {
-    if (tel.startsWith(prefix)) {
+    // 10 or 11 digits
+    const unprefixed = tel.slice(prefix.length);
+
+    if (
+      tel.startsWith(prefix) &&
+      [10, 11].includes(tel.length) &&
+      unprefixed[0] !== '0' &&
+      unprefixed[1] !== '1'
+    ) {
       return {
         type: 'fixed',
         originalNumber: tel,
@@ -103,7 +105,13 @@ function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
     }
   }
 
-  if (!safe && [7, 8, 9].includes(tel.length)) {
+  // 7-9 digits
+  if (
+    !safe &&
+    [7, 8, 9].includes(tel.length) &&
+    tel[0] !== '0' &&
+    tel[1] !== '1'
+  ) {
     return {
       type: 'fixed',
       originalNumber: tel,
@@ -123,6 +131,10 @@ function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
  * the number, `null` otherwise
  */
 function isMobileNumber(tel: string): MobileTelepon | null {
+  if (tel.length < 10 || tel.length > 13) {
+    return null;
+  }
+
   for (const [card, prefixes] of Object.entries(PREFIX_CARD)) {
     if (prefixes.some(prefix => tel.startsWith(prefix))) {
       let providerName!: string;
