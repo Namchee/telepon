@@ -17,12 +17,10 @@ import {
  * Attempt to parse a telephone number from the provided string.
  *
  * @param {string} tel a string containing telephone number
- * @param {boolean?} safe determine if the parsing process
- * should only be done when the input is unambiguous. Defaults to `true`
  * @returns {Telepon} parsed input as telephone number with metadata
  * information
  */
-export function parse(tel: string, safe: boolean = true): Telepon {
+export function parse(tel: string): Telepon {
   const emergencyNumber = isEmergencyLine(tel);
 
   if (emergencyNumber) {
@@ -32,19 +30,14 @@ export function parse(tel: string, safe: boolean = true): Telepon {
   let input: string = tel.replace(/[^\d]+/g, '');
 
   if (!input.startsWith('0') && !input.startsWith('62')) {
-    if (safe) {
-      throw new AmbiguousNumberException();
-    } else {
-      // eslint-disable-next-line
-      console.warn('[WARN]: Telephone number doesn\'t start with expected prefix. Parsing capabilities will be limited and may cause invalid validation.');
-    }
+    throw new AmbiguousNumberException();
   }
 
   if (input.startsWith('62')) {
     input = input.replace(/^62/, '0');
   }
 
-  const number = isFixedLine(input, safe) ?? isMobileNumber(input);
+  const number = isFixedLine(input) ?? isMobileNumber(input);
 
   if (number) {
     return number;
@@ -80,12 +73,10 @@ function isEmergencyLine(tel: string): EmergencyService | null {
  * Check if the supplied number is an fixed line telephone number
  *
  * @param {string} tel telephone number
- * @param {boolean} safe determine if the parsing process
- * should only be done when the input is unambiguous. Defaults to `true`
  * @returns {FixedTelepon | null} an object that describes
  * the number, `null` otherwise
  */
-function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
+function isFixedLine(tel: string): FixedTelepon | null {
   for (const [prefix, region] of Object.entries(PREFIX_TELEPON)) {
     // 10 or 11 digits
     const unprefixed = tel.slice(prefix.length);
@@ -103,21 +94,6 @@ function isFixedLine(tel: string, safe: boolean = true): FixedTelepon | null {
         region,
       };
     }
-  }
-
-  // 7-9 digits
-  if (
-    !safe &&
-    [7, 8, 9].includes(tel.length) &&
-    tel[0] !== '0' &&
-    tel[1] !== '1'
-  ) {
-    return {
-      type: 'fixed',
-      originalNumber: tel,
-      area: null,
-      region: null,
-    };
   }
 
   return null;

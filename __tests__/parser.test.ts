@@ -19,18 +19,6 @@ describe('Parser test', () => {
     }
   });
 
-  // eslint-disable-next-line max-len
-  it('should warn to console when number is ambiguous and safe is equal to false', () => {
-    const input = '5643178';
-    const spy = jest.spyOn(console, 'warn').mockImplementation();
-
-    parse(input, false);
-
-    expect(spy).toHaveBeenCalledTimes(1);
-
-    spy.mockRestore();
-  });
-
   it('should be able to sanitize commonly-formatted inputs', () => {
     const input = '(021) 564-3178';
 
@@ -74,31 +62,6 @@ describe('Parser test', () => {
     expect(fixedLine.region)
       .toStrictEqual(['Tebing Tinggi', 'Serdang Bedagai']);
   });
-
-  it(
-    'should attempt to parse unprefixed fixed line number when safe is false',
-    () => {
-      const input = '5643178';
-
-      const spy = jest.spyOn(console, 'warn').mockImplementation();
-
-      const telepon = parse(input, false);
-
-      expect(telepon.type).toBe('fixed');
-      expect(telepon.originalNumber).toBe('5643178');
-
-      expect(Object.keys(telepon).length).toBe(4);
-      expect(telepon.hasOwnProperty('area')).toBe(true);
-      expect(telepon.hasOwnProperty('region')).toBe(true);
-
-      const fixedLine = telepon as FixedTelepon;
-
-      expect(fixedLine.area).toBeNull();
-      expect(fixedLine.region).toBeNull();
-
-      spy.mockRestore();
-    },
-  );
 
   it('should be able to parse cellular telephone number', () => {
     const input = '08158372500';
