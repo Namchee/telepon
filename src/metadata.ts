@@ -377,7 +377,7 @@ export const PREFIX_CARD = {
 };
 
 export const CARD_PROVIDER = {
-  'PT Indosat': ['IM3'],
+  'PT Indosat': ['IM3 Ooredoo'],
   'PT Telkomsel': [
     'kartuHALO',
     'simPATI',

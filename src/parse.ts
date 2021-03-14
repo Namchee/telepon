@@ -44,7 +44,7 @@ export function parse(tel: string, safe: boolean = true): Telepon {
     input = input.replace(/^62/, '0');
   }
 
-  const number = isFixedLine(tel, safe) ?? isMobileNumber(tel);
+  const number = isFixedLine(input, safe) ?? isMobileNumber(input);
 
   if (number) {
     return number;
