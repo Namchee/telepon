@@ -1,9 +1,14 @@
 import { AmbiguousNumberException } from '../src/exceptions/ambiguous';
 import { InvalidNumberException } from '../src/exceptions/invalid';
 import { EmergencyService, FixedTelepon, MobileTelepon } from '../src/telepon';
-import { parse } from './../src/parse';
+import {
+  parse,
+  parseAsEmergency,
+  parseAsFixedLine,
+  parseAsMobile,
+} from './../src/parse';
 
-describe('Parser test', () => {
+describe('Generic parser test', () => {
   // eslint-disable-next-line max-len
   it('should throw an error when number is ambiguous and safe is equal to true', () => {
     const input = '1234567';
@@ -102,9 +107,7 @@ describe('Parser test', () => {
 
       parse(input);
 
-      throw new Error(
-        'Should throw an error when input is not a telephone number',
-      );
+      throw new Error('Input is an invalid telephone number');
     } catch (err) {
       expect(err).toBeInstanceOf(InvalidNumberException);
     }
@@ -115,6 +118,86 @@ describe('Parser test', () => {
       const input = '0211223456';
 
       parse(input);
+    } catch (err) {
+      expect(err).toBeInstanceOf(InvalidNumberException);
+    }
+  });
+});
+
+describe('Emergency number parser test', () => {
+  it('should be able to parse emergency number', () => {
+    const input = '110';
+
+    const number = parseAsEmergency(input);
+
+    expect(number.type).toBe('emergency');
+    expect(number.description).toBe('Polisi');
+    expect(number.originalNumber).toBe('110');
+  });
+
+  // eslint-disable-next-line
+  it('should throw an error when the provided number is not an emergency service', () => {
+    const input = '12222';
+
+    try {
+      parseAsEmergency(input);
+
+      throw new Error('Input is not an emergency service number');
+    } catch (err) {
+      expect(err).toBeInstanceOf(InvalidNumberException);
+    }
+  });
+});
+
+describe('Fixed line number parser test', () => {
+  it('should be able to parse fixed line number', () => {
+    const input = '(022) 566-37848';
+
+    const number = parseAsFixedLine(input);
+
+    expect(number.type).toBe('fixed');
+    expect(number.originalNumber).toBe('02256637848');
+    expect(number.area).toBe(2);
+    expect(number.region).toStrictEqual([
+      'Bandung',
+      'Cimahi',
+    ]);
+  });
+
+  // eslint-disable-next-line
+  it('should throw an error when the provided number is not a fixed line number', () => {
+    const input = '1230210546231546';
+
+    try {
+      parseAsEmergency(input);
+
+      throw new Error('Input is not a fixed line number');
+    } catch (err) {
+      expect(err).toBeInstanceOf(InvalidNumberException);
+    }
+  });
+});
+
+describe('Mobile number parser test', () => {
+  it('should be able to parse mobile number', () => {
+    const input = '0895_6132_37041';
+
+    const number = parseAsMobile(input);
+
+    expect(number.type).toBe('mobile');
+    expect(number.originalNumber).toBe('0895613237041');
+    expect(number.card).toBe('3');
+    expect(number.provider).toBe('PT Hutchison 3 Indonesia');
+  });
+
+  // eslint-disable-next-line
+  it('should throw an error when the provided number is not a mobile line number', () => {
+    const input = '123';
+
+    try {
+      parseAsMobile(input);
+
+      throw new Error('Input is not a mobile number');
     } catch (err) {
       expect(err).toBeInstanceOf(InvalidNumberException);
     }

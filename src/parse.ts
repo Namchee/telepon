@@ -21,13 +21,13 @@ import {
  * information
  */
 export function parse(tel: string): Telepon {
-  const emergencyNumber = isEmergencyLine(tel);
+  let input: string = tel.replace(/[^\d]+/g, '');
+
+  const emergencyNumber = isEmergencyLine(input);
 
   if (emergencyNumber) {
     return emergencyNumber;
   }
-
-  let input: string = tel.replace(/[^\d]+/g, '');
 
   if (!input.startsWith('0') && !input.startsWith('62')) {
     throw new AmbiguousNumberException();
@@ -41,6 +41,64 @@ export function parse(tel: string): Telepon {
 
   if (number) {
     return number;
+  }
+
+  throw new InvalidNumberException();
+}
+
+/**
+ * Attempt to parse an emergency telephone number from the provided string.
+ *
+ * @param {string} tel a string containing telephone number
+ * @returns {EmergencyService} parsed input as telephone number with metadata
+ * information
+ */
+export function parseAsEmergency(tel: string): EmergencyService {
+  const input = tel.replace(/[^\d]/g, '');
+
+  const emergencyNumber = isEmergencyLine(input);
+
+  if (emergencyNumber) {
+    return emergencyNumber;
+  }
+
+  throw new InvalidNumberException();
+}
+
+/**
+ * Attempt to parse an fixed line telephone number from the provided string.
+ *
+ * @param {string} tel a string containing telephone number
+ * @returns {EmergencyService} parsed input as fixed line telephone number with
+ * metadata information
+ */
+export function parseAsFixedLine(tel: string): FixedTelepon {
+  const input = tel.replace(/[^\d]/g, '');
+
+  const fixedLine = isFixedLine(input);
+
+  if (fixedLine) {
+    return fixedLine;
+  }
+
+  throw new InvalidNumberException();
+}
+
+
+/**
+ * Attempt to parse an mobile telephone number from the provided string.
+ *
+ * @param {string} tel a string containing telephone number
+ * @returns {EmergencyService} parsed input as mobile telephone number with
+ * metadata information
+ */
+export function parseAsMobile(tel: string): MobileTelepon {
+  const input = tel.replace(/[^\d]/g, '');
+
+  const mobile = isMobileNumber(input);
+
+  if (mobile) {
+    return mobile;
   }
 
   throw new InvalidNumberException();
