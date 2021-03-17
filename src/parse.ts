@@ -21,7 +21,7 @@ import {
  * information
  */
 export function parse(tel: string): Telepon {
-  let input: string = tel.replace(/[^\d]+/g, '');
+  let input = tel.replace(/[^\d\s\-\+]/g, '');
 
   const emergencyNumber = isEmergencyLine(input);
 
@@ -29,12 +29,18 @@ export function parse(tel: string): Telepon {
     return emergencyNumber;
   }
 
-  if (!input.startsWith('0') && !input.startsWith('62')) {
+  if (input.startsWith('+') && input.slice(1, 3) !== '62') {
     throw new AmbiguousNumberException();
   }
 
-  if (input.startsWith('62')) {
-    input = input.replace(/^62/, '0');
+  if (input.startsWith('+62')) {
+    input = `0${input.slice(3)}`;
+  }
+
+  input = input.replace(/[^\d]/g, '');
+
+  if (!input.startsWith('0') && !input.startsWith('+62')) {
+    throw new AmbiguousNumberException();
   }
 
   const number = isFixedLine(input) ?? isMobileNumber(input);
@@ -54,7 +60,7 @@ export function parse(tel: string): Telepon {
  * information
  */
 export function parseAsEmergency(tel: string): EmergencyService {
-  const input = tel.replace(/[^\d]/g, '');
+  const input = tel.replace(/[^\d\s\-\+]/g, '');
 
   const emergencyNumber = isEmergencyLine(input);
 
@@ -73,7 +79,21 @@ export function parseAsEmergency(tel: string): EmergencyService {
  * metadata information
  */
 export function parseAsFixedLine(tel: string): FixedTelepon {
-  const input = tel.replace(/[^\d]/g, '');
+  let input = tel.replace(/[^\d\s\-\+]/g, '');
+
+  if (input.startsWith('+') && input.slice(1, 3) !== '62') {
+    throw new AmbiguousNumberException();
+  }
+
+  if (input.startsWith('+62')) {
+    input = `0${input.slice(3)}`;
+  }
+
+  input = input.replace(/[^\d]/g, '');
+
+  if (!input.startsWith('0') && !input.startsWith('+62')) {
+    throw new AmbiguousNumberException();
+  }
 
   const fixedLine = isFixedLine(input);
 
@@ -93,7 +113,21 @@ export function parseAsFixedLine(tel: string): FixedTelepon {
  * metadata information
  */
 export function parseAsMobile(tel: string): MobileTelepon {
-  const input = tel.replace(/[^\d]/g, '');
+  let input = tel.replace(/[^\d\s\-\+]/g, '');
+
+  if (input.startsWith('+') && input.slice(1, 3) !== '62') {
+    throw new AmbiguousNumberException();
+  }
+
+  if (input.startsWith('+62')) {
+    input = `0${input.slice(3)}`;
+  }
+
+  input = input.replace(/[^\d]/g, '');
+
+  if (!input.startsWith('0') && !input.startsWith('+62')) {
+    throw new AmbiguousNumberException();
+  }
 
   const mobile = isMobileNumber(input);
 

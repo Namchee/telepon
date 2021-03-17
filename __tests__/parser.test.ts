@@ -10,15 +10,13 @@ import {
 
 describe('Generic parser test', () => {
   // eslint-disable-next-line max-len
-  it('should throw an error when number is ambiguous and safe is equal to true', () => {
+  it('should throw an error when number is not a telephone number', () => {
     const input = '1234567';
 
     try {
       parse(input);
 
-      throw new Error(
-        'Should throw an error as 1234567 doesn\'t start with \'0\'',
-      );
+      throw new Error('Input is not a telephone number');
     } catch (err) {
       expect(err).toBeInstanceOf(AmbiguousNumberException);
     }
@@ -75,6 +73,24 @@ describe('Generic parser test', () => {
 
     expect(telepon.type).toBe('mobile');
     expect(telepon.originalNumber).toBe(input);
+
+    expect(Object.keys(telepon).length).toBe(4);
+    expect(telepon.hasOwnProperty('card')).toBe(true);
+    expect(telepon.hasOwnProperty('provider')).toBe(true);
+
+    const mobileLine = telepon as MobileTelepon;
+
+    expect(mobileLine.card).toBe('IM3 Ooredoo');
+    expect(mobileLine.provider).toBe('PT Indosat');
+  });
+
+  it('should be able to parse internationally-formatted number', () => {
+    const input = '+62 8158372500';
+
+    const telepon = parse(input);
+
+    expect(telepon.type).toBe('mobile');
+    expect(telepon.originalNumber).toBe('08158372500');
 
     expect(Object.keys(telepon).length).toBe(4);
     expect(telepon.hasOwnProperty('card')).toBe(true);
@@ -164,6 +180,20 @@ describe('Fixed line number parser test', () => {
     ]);
   });
 
+  it('should be able to parse internationally-formatted number', () => {
+    const input = '+62 22 566 37848';
+
+    const number = parseAsFixedLine(input);
+
+    expect(number.type).toBe('fixed');
+    expect(number.originalNumber).toBe('02256637848');
+    expect(number.area).toBe(2);
+    expect(number.region).toStrictEqual([
+      'Bandung',
+      'Cimahi',
+    ]);
+  });
+
   // eslint-disable-next-line
   it('should throw an error when the provided number is not a fixed line number', () => {
     const input = '1230210546231546';
@@ -176,11 +206,32 @@ describe('Fixed line number parser test', () => {
       expect(err).toBeInstanceOf(InvalidNumberException);
     }
   });
+
+  it('should be able to distinguish a fake fixed line number', () => {
+    try {
+      const input = '0211223456';
+
+      parse(input);
+    } catch (err) {
+      expect(err).toBeInstanceOf(InvalidNumberException);
+    }
+  });
 });
 
 describe('Mobile number parser test', () => {
   it('should be able to parse mobile number', () => {
-    const input = '0895_6132_37041';
+    const input = '0895 6132 37041';
+
+    const number = parseAsMobile(input);
+
+    expect(number.type).toBe('mobile');
+    expect(number.originalNumber).toBe('0895613237041');
+    expect(number.card).toBe('3');
+    expect(number.provider).toBe('PT Hutchison 3 Indonesia');
+  });
+
+  it('should be able to parse internationally-formatted mobile number', () => {
+    const input = '+62 895 6132 37041';
 
     const number = parseAsMobile(input);
 
@@ -192,7 +243,7 @@ describe('Mobile number parser test', () => {
 
   // eslint-disable-next-line
   it('should throw an error when the provided number is not a mobile line number', () => {
-    const input = '123';
+    const input = '0215643178';
 
     try {
       parseAsMobile(input);
