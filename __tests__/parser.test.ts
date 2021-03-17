@@ -8,7 +8,7 @@ import {
   parseAsMobile,
 } from './../src/parse';
 
-describe('Generic parser test', () => {
+describe('parse', () => {
   // eslint-disable-next-line max-len
   it('should throw an error when number is not a telephone number', () => {
     const input = '1234567';
@@ -144,7 +144,7 @@ describe('Generic parser test', () => {
   });
 });
 
-describe('Emergency number parser test', () => {
+describe('parseAsEmergency', () => {
   it('should be able to parse emergency number', () => {
     const input = '110';
 
@@ -169,7 +169,7 @@ describe('Emergency number parser test', () => {
   });
 });
 
-describe('Fixed line number parser test', () => {
+describe('parseAsFixedLine', () => {
   it('should be able to parse fixed line number', () => {
     const input = '(022) 566-37848';
 
@@ -226,7 +226,7 @@ describe('Fixed line number parser test', () => {
   });
 });
 
-describe('Mobile number parser test', () => {
+describe('parseAsMobile', () => {
   it('should be able to parse mobile number', () => {
     const input = '0895 6132 37041';
 
