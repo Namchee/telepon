@@ -30,12 +30,14 @@ describe('Generic parser test', () => {
     expect(telepon.type).toBe('fixed');
     expect(telepon.originalNumber).toBe('0215643178');
 
-    expect(Object.keys(telepon).length).toBe(4);
+    expect(Object.keys(telepon).length).toBe(6);
     expect(telepon.hasOwnProperty('area')).toBe(true);
     expect(telepon.hasOwnProperty('region')).toBe(true);
 
     const fixedLine = telepon as FixedTelepon;
 
+    expect(fixedLine.number).toBe('5643178');
+    expect(fixedLine.regionPrefix).toBe('21');
     expect(fixedLine.area).toBe(2);
     expect(fixedLine.region).toStrictEqual([
       'Jakarta',
@@ -55,12 +57,14 @@ describe('Generic parser test', () => {
     expect(telepon.type).toBe('fixed');
     expect(telepon.originalNumber).toBe('06212212333');
 
-    expect(Object.keys(telepon).length).toBe(4);
+    expect(Object.keys(telepon).length).toBe(6);
     expect(telepon.hasOwnProperty('area')).toBe(true);
     expect(telepon.hasOwnProperty('region')).toBe(true);
 
     const fixedLine = telepon as FixedTelepon;
 
+    expect(fixedLine.number).toBe('2212333');
+    expect(fixedLine.regionPrefix).toBe('621');
     expect(fixedLine.area).toBe(6);
     expect(fixedLine.region)
       .toStrictEqual(['Tebing Tinggi', 'Serdang Bedagai']);
@@ -172,7 +176,9 @@ describe('Fixed line number parser test', () => {
     const number = parseAsFixedLine(input);
 
     expect(number.type).toBe('fixed');
+    expect(number.number).toBe('56637848');
     expect(number.originalNumber).toBe('02256637848');
+    expect(number.regionPrefix).toBe('22');
     expect(number.area).toBe(2);
     expect(number.region).toStrictEqual([
       'Bandung',
@@ -186,6 +192,8 @@ describe('Fixed line number parser test', () => {
     const number = parseAsFixedLine(input);
 
     expect(number.type).toBe('fixed');
+    expect(number.number).toBe('56637848');
+    expect(number.regionPrefix).toBe('22');
     expect(number.originalNumber).toBe('02256637848');
     expect(number.area).toBe(2);
     expect(number.region).toStrictEqual([

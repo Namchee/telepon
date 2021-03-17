@@ -60,7 +60,7 @@ export function parse(tel: string): Telepon {
  * information
  */
 export function parseAsEmergency(tel: string): EmergencyService {
-  const input = tel.replace(/[^\d\s\-\+]/g, '');
+  const input = tel.replace(/[^\d]/g, '');
 
   const emergencyNumber = isEmergencyLine(input);
 
@@ -181,7 +181,9 @@ function isFixedLine(tel: string): FixedTelepon | null {
     ) {
       return {
         type: 'fixed',
+        number: unprefixed,
         originalNumber: tel,
+        regionPrefix: prefix.slice(1),
         area: Number(prefix[1]),
         region,
       };
