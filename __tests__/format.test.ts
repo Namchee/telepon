@@ -1,5 +1,5 @@
 import { parseAsFixedLine, parseAsMobile } from './../src/parse';
-import { Format, format, tryFormat } from './../src/format';
+import { Standard, format, tryFormat } from './../src/format';
 import { InvalidNumberException } from '../src/exceptions/invalid';
 
 describe('format', () => {
@@ -16,7 +16,7 @@ describe('format', () => {
     const input = '0215643178';
     const telepon = parseAsFixedLine(input);
 
-    const result = format(telepon, Format.LOCAL);
+    const result = format(telepon, Standard.LOCAL);
 
     expect(result).toBe('(021) 564 3178');
   });
@@ -25,9 +25,18 @@ describe('format', () => {
     const input = '0215643178';
     const telepon = parseAsFixedLine(input);
 
-    const result = format(telepon, Format.DASHED);
+    const result = format(telepon, Standard.DASHED);
 
     expect(result).toBe('(021) 564-3178');
+  });
+
+  it('should be able to format fixed line number with even length', () => {
+    const input = '02256477890';
+    const telepon = parseAsFixedLine(input);
+
+    const result = format(telepon, Standard.LOCAL);
+
+    expect(result).toBe('(022) 5647 7890');
   });
 
   it('should be able to format mobile number in e.164 format', () => {
@@ -43,7 +52,7 @@ describe('format', () => {
     const input = '0895613237041';
     const telepon = parseAsMobile(input);
 
-    const result = format(telepon, Format.LOCAL);
+    const result = format(telepon, Standard.LOCAL);
 
     expect(result).toBe('0895 6132 37041');
   });
@@ -52,9 +61,18 @@ describe('format', () => {
     const input = '0895613237041';
     const telepon = parseAsMobile(input);
 
-    const result = format(telepon, Format.DASHED);
+    const result = format(telepon, Standard.DASHED);
 
     expect(result).toBe('0895-6132-37041');
+  });
+
+  it('should be able to format even numbered mobile number', () => {
+    const input = '087826890231';
+    const telepon = parseAsMobile(input);
+
+    const result = format(telepon, Standard.LOCAL);
+
+    expect(result).toBe('0878 2689 0231');
   });
 });
 

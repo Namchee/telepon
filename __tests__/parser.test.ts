@@ -36,8 +36,8 @@ describe('parse', () => {
 
     const fixedLine = telepon as FixedTelepon;
 
-    expect(fixedLine.number).toBe('5643178');
-    expect(fixedLine.regionPrefix).toBe('21');
+    expect(fixedLine.unprefixedNumber).toBe('5643178');
+    expect(fixedLine.prefix).toBe('21');
     expect(fixedLine.area).toBe(2);
     expect(fixedLine.region).toStrictEqual([
       'Jakarta',
@@ -63,8 +63,8 @@ describe('parse', () => {
 
     const fixedLine = telepon as FixedTelepon;
 
-    expect(fixedLine.number).toBe('2212333');
-    expect(fixedLine.regionPrefix).toBe('621');
+    expect(fixedLine.unprefixedNumber).toBe('2212333');
+    expect(fixedLine.prefix).toBe('621');
     expect(fixedLine.area).toBe(6);
     expect(fixedLine.region)
       .toStrictEqual(['Tebing Tinggi', 'Serdang Bedagai']);
@@ -176,9 +176,9 @@ describe('parseAsFixedLine', () => {
     const number = parseAsFixedLine(input);
 
     expect(number.type).toBe('fixed');
-    expect(number.number).toBe('56637848');
+    expect(number.unprefixedNumber).toBe('56637848');
     expect(number.originalNumber).toBe('02256637848');
-    expect(number.regionPrefix).toBe('22');
+    expect(number.prefix).toBe('22');
     expect(number.area).toBe(2);
     expect(number.region).toStrictEqual([
       'Bandung',
@@ -192,8 +192,8 @@ describe('parseAsFixedLine', () => {
     const number = parseAsFixedLine(input);
 
     expect(number.type).toBe('fixed');
-    expect(number.number).toBe('56637848');
-    expect(number.regionPrefix).toBe('22');
+    expect(number.unprefixedNumber).toBe('56637848');
+    expect(number.prefix).toBe('22');
     expect(number.originalNumber).toBe('02256637848');
     expect(number.area).toBe(2);
     expect(number.region).toStrictEqual([

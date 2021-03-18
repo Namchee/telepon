@@ -181,9 +181,9 @@ function isFixedLine(tel: string): FixedTelepon | null {
     ) {
       return {
         type: 'fixed',
-        number: unprefixed,
+        unprefixedNumber: unprefixed,
         originalNumber: tel,
-        regionPrefix: prefix.slice(1),
+        prefix: prefix.slice(1),
         area: Number(prefix[1]),
         region,
       };
