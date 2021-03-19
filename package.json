@@ -5,8 +5,11 @@
   "main": "build/index.js",
   "scripts": {
     "test": "jest",
-    "refresh": "rm -rf node_modules/ dist/ build/ && npm i",
-    "postuninstall": "npm prune"
+    "build": "rm -rf build && npm run build:cjs & npm run build:esm & npm run build:umd",
+    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --outDir build/cjs",
+    "build:esm": "tsc --project tsconfig.build.json --module es2015 --outDir build/esm",
+    "build:umd": "tsc --project tsconfig.build.json --module umd --outDir build/umd",
+    "lint": "eslint index.ts __tests__/**/*.ts"
   },
   "keywords": [
     "boilerplate",
@@ -16,9 +19,11 @@
   "author": "Namchee",
   "license": "MIT",
   "devDependencies": {
+    "@auto-it/npm": "^10.20.6",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
+    "auto": "^10.20.6",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.19.0",

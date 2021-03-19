@@ -1,5 +1,5 @@
 export { Telepon } from './src/telepon';
-export { format, tryFormat } from './src/format';
+export { format, tryFormat, Standard } from './src/format';
 export {
   parse,
   parseAsEmergency,
