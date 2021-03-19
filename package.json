@@ -15,6 +15,14 @@
     "build:declaration": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir build",
     "lint": "eslint index.ts __tests__/**/*.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Namchee/telepon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Namchee/telepon/issues"
+  },
+  "homepage": "https://github.com/Namchee/telepon#readme",
   "keywords": [
     "phone-number",
     "validator",
@@ -43,5 +51,9 @@
     "ts-node": "^8.10.2",
     "typescript": "^4.2.3",
     "typesync": "^0.8.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
