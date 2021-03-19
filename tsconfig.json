@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2015",
     "lib": [
       "ES2019.Array",
       "ES2020.Promise"
