@@ -1,37 +1,123 @@
-# Namchee's Boilerplate
+# telepon
 
-[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts) [![devDependencies](https://img.shields.io/david/dev/namchee/namchee-boilerplate)](https://david-dm.org/namchee/namchee-boilerplate?type=dev)
+> Telepon is a sane and easy-to-use JavaScript library to parse and format Indonesian telephone number from a string.
 
-Sebuah _boilerplate_ sederhana untuk project _backend_ NodeJS dengan menggunakan Typescript dan ESLint
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts) [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/) ![devDependecies](https://img.shields.io/david/dev/namchee/telepon) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/namchee/telepon)
 
-## Fitur
 
-1. Config Typescript _all-in-one_, tinggal pakai
-2. Config ESLint dengan [_preset_ Google](https://github.com/google/gts), namun tidak terlalu _strict_ dan di _fine-tune_ lebih lanjut
-3. Update _dependency_ berkala
-4. [TypeSync](https://github.com/jeffijoe/typesync) untuk mempermudah instalasi _types_ yang dibutuhkan TypeScript
+Parsing and formatting telephone number can be such an ass sometimes. Moreover, there's no way you can assume phone number validity just from their length and `0` prefix. Simply put, validating a phone number is not an easy task as you have consider all standards involved.
 
-## Instalasi
+With `telepon`, not only you can format phone number easily, you can also parse a phone number from an unformatted strings easily! Moreover, this package has out-of-the-box support for TypeScript.
 
-1. Clone repo ini atau eksekusi `git clone https://github.com/Namchee/namchee-boilerplate.git` di terminal. Untuk pengguna GitHub, dapat juga menggunakan repo ini sebagai _template_ repo untuk mempermudah _development_
-2. Ketik `npm install` atau `yarn` pada terminal anda
-3. Install _dependencies_ lain yang anda butuhkan dalam proses _development_
-4. Atur [tsconfig](tsconfig.json) sesuai kebutuhan, termasuk `include` dan `exclude` supaya tidak bermasalah pada proses _build_
+> ⚠️ **WARNING**: This package **DOES NOT** guarantee that the number is 100% callable. To do that, you have to test it yourself.
 
-## FAQ
+## Table of Contents
 
-### Mengapa tidak menggunakan `webpack`?
+1. [Installation](#installation)
+2. [Data Types](#data-types)
+3. [Functions](#functions)
+4. [License](#license)
 
-Karena _server-side_ JavaScript tidak membutuhkan _bundling_. `webpack` masuk akal pada _front-end_ karena browser tidak memiliki _module_, sedangkan NodeJS memiliki `require` sebagai _module system_ mereka.
+## Installation
 
-### Mengapa tidak menggunakan `babel`?
+Install this package with your favorite package manager like
 
-Karena _server-side_ JavaScript tidak memerlukan _transpile_. Developerlah yang seharusnya mengontrol versi Node yang digunakan sesuai kebutuhan aplikasi.
+```shell
+npm install @namchee/telepon
+```
 
-### Seberapa sering _update_ dependency dilakukan?
+## Data Types
 
-Sesering yang saya bisa, setidaknya 2 minggu sekali.
+**Name** | **Description**
+---- | -----------
+`EmergencyService` | An emergency service number, such as law enforcement, firefighter, etc.
+`FixedTelepon` | A fixed line telephone number
+`MobileTelepon` | A mobile cellular telephone number
 
-## Lisensi
+### Common Properties
 
-_Boilerplate_ ini menggunakan lisensi [MIT](LICENSE)
+These properties exists in all kind of `telepon`
+
+**Name** | **Value** | **Description**
+---- | ----- | -----------
+`type` | `emergency \| fixed \| mobile` | Number type
+`originalNumber` | `string` | Represents parsed but unmodified telephone number
+
+### `EmergencyService` Properties
+
+These properties only exist in `EmergencyService`
+
+**Name** | **Value** | **Description**
+---- | ----- | -----------
+`type` | `emergency` | Self explanatory
+`description` | `string` | Describes what kind of service that the number provides
+
+### `FixedTelepon` Properties
+
+These properties only exist in `FixedTelepon`
+
+**Name** | **Value** | **Description**
+---- | ----- | -----------
+`type` | `fixed` | Self explanatory
+`unprefixedNumber` | `string` | Telephone number without prefix
+`prefix` | `string` | Region prefix
+`region` | `string[]` | List of possible regions
+`area` | `number` | Area code
+
+### `MobileTelepon` Properties
+
+These properties only exist in `MobileTelepon`
+
+**Name** | **Value** | **Description**
+---- | ----- | -----------
+`type` | `mobile` | Self explanatory
+`card` | `string` | Card type
+`provider` | `string` | Service provider
+
+### Standard
+
+To enhance formatting capabilites, this package provides an `enum` named `Standard` which lists all supported formattings on this package.
+
+**Name** | **Description**
+---- | -----------
+`Standard.E164` | Format the number using the [E.164 Standard](https://www.itu.int/rec/T-REC-E.164/en). This is the default value.
+`Standard.LOCAL` | Format the number using a commonly used format, which is `(<region_prefix>) xxxx xxxx`
+`Standard.DASHED` | Same as `Standard.LOCAL`, but separated with dash `-`.
+
+### Errors
+
+**Name** | **Description**
+---- | -----------
+`AmbiguousNumberException` | Thrown when the number doesn't start with `0` or `+62` (if its not an `EmergencyService`)
+`InvalidNumberException` | Thrown when the number is not a valid phone number in Indonesia.
+
+## Functions
+### `parse(number: string)`
+
+Parse a telephone number from a `string`, which includes simple sanitizing and validation. Returns an instance of either `EmergencyService`, `FixedTelepon`, or `MobileTelepon`
+
+### `parseAsEmergency(number: string)`
+
+Forcefully parse a telephone number from a `string` as an `EmergencyService`. Will throw an error if the number is not an emergency service number.
+
+### `parseAsFixedLine(number: string)`
+
+Forcefully parse a telephone number from a `string` as an `FixedTelepon`. Will throw an error if the number is not a fixed line telephone number.
+
+### `parseAsMobile(number: string)`
+
+Forcefully parse a telephone number from a `string` as an `MobileTelepon`. Will throw an error if the number is not a cellular telephone number.
+
+### `format(telepon: FixedTelepon | MobileTelepon, standard: Standard = Standard.E164)`
+
+Format a fixed line telephone number or a mobile cellular telephone number to a specified standard. Please note the input **MUST** be parsed first.
+
+### `tryFormat(telepon: FixedTelepon | MobileTelepon, standard: Standard = Standard.E164)`
+
+Attempt to format a fixed line telephone number or a mobile cellular telephone number to a specified standard. The input will be parsed on demand, which basically calls the `parse` function.
+
+Will throw an error if the number is invalid.
+
+## License
+
+This project is licensed under the [MIT license](./LICENSE)
