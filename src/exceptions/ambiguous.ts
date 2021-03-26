@@ -8,7 +8,8 @@
 export class AmbiguousNumberException extends Error {
   public constructor() {
     super(
-      'Nomor telepon yang diberikan harus diawali dengan \'0\' atau \'62\'',
+      // eslint-disable-next-line max-len
+      'Nomor telepon yang diberikan harus diawali dengan \'0\', \'+62\' atau \'62\'',
     );
   }
 }
