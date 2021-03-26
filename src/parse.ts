@@ -14,20 +14,13 @@ import {
 } from './telepon';
 
 /**
- * Attempt to parse a telephone number from the provided string.
+ * Do pre sanitize and early validation on a phone number string
  *
- * @param {string} tel a string containing telephone number
- * @returns {Telepon} parsed input as telephone number with metadata
- * information
+ * @param {string} tel phone number string
+ * @returns {string} sanitized phone number string
  */
-export function parse(tel: string): Telepon {
+function precheck(tel: string): string {
   let input = tel.replace(/[^\d\s\-\+]/g, '');
-
-  const emergencyNumber = isEmergencyLine(input);
-
-  if (emergencyNumber) {
-    return emergencyNumber;
-  }
 
   if (input.startsWith('+') && input.slice(1, 3) !== '62') {
     throw new AmbiguousNumberException();
@@ -39,9 +32,34 @@ export function parse(tel: string): Telepon {
 
   input = input.replace(/[^\d]/g, '');
 
-  if (!input.startsWith('0') && !input.startsWith('+62')) {
+  if (input.startsWith('62')) {
+    input = `0${input.slice(2)}`;
+  }
+
+  if (!input.startsWith('0')) {
     throw new AmbiguousNumberException();
   }
+
+  return input;
+}
+
+/**
+ * Attempt to parse a telephone number from the provided string.
+ *
+ * @param {string} tel a string containing telephone number
+ * @returns {Telepon} parsed input as telephone number with metadata
+ * information
+ */
+export function parse(tel: string): Telepon {
+  const emergencyNumber = isEmergencyLine(
+    tel.replace(/[^\d]/, ''),
+  );
+
+  if (emergencyNumber) {
+    return emergencyNumber;
+  }
+
+  const input = precheck(tel);
 
   const number = isFixedLine(input) ?? isMobileNumber(input);
 
@@ -79,21 +97,7 @@ export function parseAsEmergency(tel: string): EmergencyService {
  * metadata information
  */
 export function parseAsFixedLine(tel: string): FixedTelepon {
-  let input = tel.replace(/[^\d\s\-\+]/g, '');
-
-  if (input.startsWith('+') && input.slice(1, 3) !== '62') {
-    throw new AmbiguousNumberException();
-  }
-
-  if (input.startsWith('+62')) {
-    input = `0${input.slice(3)}`;
-  }
-
-  input = input.replace(/[^\d]/g, '');
-
-  if (!input.startsWith('0') && !input.startsWith('+62')) {
-    throw new AmbiguousNumberException();
-  }
+  const input = precheck(tel);
 
   const fixedLine = isFixedLine(input);
 
@@ -113,21 +117,7 @@ export function parseAsFixedLine(tel: string): FixedTelepon {
  * metadata information
  */
 export function parseAsMobile(tel: string): MobileTelepon {
-  let input = tel.replace(/[^\d\s\-\+]/g, '');
-
-  if (input.startsWith('+') && input.slice(1, 3) !== '62') {
-    throw new AmbiguousNumberException();
-  }
-
-  if (input.startsWith('+62')) {
-    input = `0${input.slice(3)}`;
-  }
-
-  input = input.replace(/[^\d]/g, '');
-
-  if (!input.startsWith('0') && !input.startsWith('+62')) {
-    throw new AmbiguousNumberException();
-  }
+  const input = precheck(tel);
 
   const mobile = isMobileNumber(input);
 
