@@ -1,3 +1,16 @@
+# v1.0.2 (Fri Mar 26 2021)
+
+#### 🐛 Bug Fix
+
+- chore(ci): Add custom token to bypass branch protection rules [#2](https://github.com/Namchee/telepon/pull/2) ([@Namchee](https://github.com/Namchee))
+- refactor: Apply looser precheck hook [#1](https://github.com/Namchee/telepon/pull/1) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.1 (Fri Mar 19 2021)
 
 #### ⚠️ Pushed to `master`
