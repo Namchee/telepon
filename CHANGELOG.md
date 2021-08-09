@@ -1,3 +1,16 @@
+# v1.0.6 (Mon Aug 09 2021)
+
+#### 🐛 Bug Fix
+
+- fix: Add proper package description [#4](https://github.com/Namchee/telepon/pull/4) ([@Namchee](https://github.com/Namchee))
+- chore: Migrate to native ES modules [#3](https://github.com/Namchee/telepon/pull/3) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.2 (Fri Mar 26 2021)
 
 #### 🐛 Bug Fix
