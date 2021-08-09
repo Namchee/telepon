@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "ES2015",
     "lib": [
       "ES2019.Array",
       "ES2020.Promise"
     ],
-    "module": "commonjs",
+    "module": "ES2015",
     "allowJs": true,
     "outDir": "./build",
     "preserveConstEnums": true,
     "removeComments": true,
+    "declaration": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "noImplicitThis": false,

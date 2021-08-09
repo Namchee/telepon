@@ -2,18 +2,14 @@
   "name": "@namchee/telepon",
   "version": "1.0.5",
   "description": "A simple boilerplate with namchee's style",
-  "main": "build/cjs/index.js",
-  "module": "build/esm/index.js",
-  "browser": "build/umd/index.js",
-  "types": "build/index.d.ts",
+  "exports": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "type": "module",
   "scripts": {
     "test": "jest",
-    "build": "rm -rf build && npm run build:cjs & npm run build:esm & npm run build:umd & npm run build:declaration",
-    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --outDir build/cjs",
-    "build:esm": "tsc --project tsconfig.build.json --module es2015 --outDir build/esm",
-    "build:umd": "tsc --project tsconfig.build.json --module umd --outDir build/umd",
-    "build:declaration": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir build",
-    "lint": "eslint index.ts __tests__/**/*.ts"
+    "build": "rm -rf build && tsc",
+    "lint": "eslint index.ts __tests__/**/*.ts",
+    "lint:fix": "eslint index.ts __tests__/**/*.ts --fix"
   },
   "repository": {
     "type": "git",
@@ -36,6 +32,7 @@
   "license": "MIT",
   "devDependencies": {
     "@auto-it/npm": "^10.20.6",
+    "@jest/types": "^27.0.6",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
@@ -55,5 +52,8 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   }
 }
