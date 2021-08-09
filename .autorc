@@ -1,5 +1,6 @@
 {
   "plugins": [
-    "npm"
+    "npm",
+    "conventional-commits"
   ]
 }
