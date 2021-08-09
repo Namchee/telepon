@@ -2,10 +2,7 @@
   "name": "@namchee/telepon",
   "version": "1.0.5",
   "description": "A simple boilerplate with namchee's style",
-  "main": "build/cjs/index.js",
-  "module": "build/esm/index.js",
-  "browser": "build/umd/index.js",
-  "types": "build/index.d.ts",
+  "exports": "./build/index.js",
   "scripts": {
     "test": "jest",
     "build": "rm -rf build && npm run build:cjs & npm run build:esm & npm run build:umd & npm run build:declaration",
@@ -36,6 +33,7 @@
   "license": "MIT",
   "devDependencies": {
     "@auto-it/npm": "^10.20.6",
+    "@jest/types": "^27.0.6",
     "@types/jest": "^26.0.20",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",

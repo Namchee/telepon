@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "ESNext",
     "lib": [
       "ES2019.Array",
       "ES2020.Promise"
     ],
-    "module": "commonjs",
+    "module": "ESNext",
     "allowJs": true,
     "outDir": "./build",
     "preserveConstEnums": true,
