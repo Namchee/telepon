@@ -1,7 +1,7 @@
 {
   "name": "@namchee/telepon",
   "version": "1.0.5",
-  "description": "A simple boilerplate with namchee's style",
+  "description": "Sane and easy-to-use Indonesian phone number validator and formatter.",
   "exports": "./build/index.js",
   "types": "./build/index.d.ts",
   "type": "module",
