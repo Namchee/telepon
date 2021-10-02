@@ -1,0 +1,6 @@
+.editorconfig
+.eslintrc.cjs
+jest.config.ts
+prettier.config.js
+.github
+.autorc
