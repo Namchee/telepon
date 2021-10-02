@@ -1,5 +1,5 @@
-import { parse } from './parse';
-import { FixedTelepon, MobileTelepon } from './telepon';
+import { parse } from './parse.js';
+import { FixedTelepon, MobileTelepon } from './telepon.js';
 
 export enum Standard {
   E164 = 'e.164',

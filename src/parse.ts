@@ -1,17 +1,17 @@
-import { AmbiguousNumberException } from './exceptions/ambiguous';
-import { InvalidNumberException } from './exceptions/invalid';
+import { AmbiguousNumberException } from './exceptions/ambiguous.js';
+import { InvalidNumberException } from './exceptions/invalid.js';
 import {
   CARD_PROVIDER,
   NOMOR_DARURAT,
   PREFIX_CARD,
   PREFIX_TELEPON,
-} from './metadata';
+} from './metadata.js';
 import {
   EmergencyService,
   FixedTelepon,
   MobileTelepon,
   Telepon,
-} from './telepon';
+} from './telepon.js';
 
 /**
  * Do pre sanitize and early validation on a phone number string

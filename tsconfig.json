@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
+    "target": "ES2020",
     "lib": [
       "ES2019.Array",
       "ES2020.Promise"
     ],
-    "module": "ES2015",
-    "allowJs": true,
-    "outDir": "./build",
+    "module": "ESNext",
+    "outDir": "./dist",
     "preserveConstEnums": true,
     "removeComments": true,
     "declaration": true,
@@ -27,6 +26,7 @@
     "index.ts",
   ],
   "exclude": [
+    "src/**/*.test.ts",
     "node_modules"
   ]
 }
