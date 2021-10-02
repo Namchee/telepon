@@ -1,3 +1,22 @@
+# v1.0.8 (Sat Oct 02 2021)
+
+#### 🐛 Bug Fix
+
+- fix: Enforce extension on all imports so it does not break [#9](https://github.com/Namchee/telepon/pull/9) ([@Namchee](https://github.com/Namchee))
+
+#### 🔩 Dependency Updates
+
+- chore(deps): Bump tmpl from 1.0.4 to 1.0.5 [#6](https://github.com/Namchee/telepon/pull/6) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): Bump axios from 0.21.1 to 0.21.4 [#7](https://github.com/Namchee/telepon/pull/7) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): Bump ansi-regex from 5.0.0 to 5.0.1 [#8](https://github.com/Namchee/telepon/pull/8) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.7 (Sat Oct 02 2021)
 
 #### 🐛 Bug Fix
