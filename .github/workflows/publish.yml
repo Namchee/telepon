@@ -16,11 +16,6 @@ jobs:
       - name: Checkout to repository
         uses: actions/checkout@v2
       - run: git fetch --unshallow --tags
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Lint and test before release
