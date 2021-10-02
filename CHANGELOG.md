@@ -1,3 +1,15 @@
+# v1.0.7 (Sat Oct 02 2021)
+
+#### 🐛 Bug Fix
+
+- fix(ci): Add npmignore to exclude build from gitignore [#5](https://github.com/Namchee/telepon/pull/5) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.6 (Mon Aug 09 2021)
 
 #### 🐛 Bug Fix
