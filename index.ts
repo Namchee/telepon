@@ -1,8 +1,8 @@
-export { Telepon } from './src/telepon.js';
-export { format, tryFormat, Standard } from './src/format.js';
+export { Telepon } from './src/telepon';
+export { format, tryFormat, Standard } from './src/format';
 export {
   parse,
   parseAsEmergency,
   parseAsFixedLine,
   parseAsMobile,
-} from './src/parse.js';
+} from './src/parse';
