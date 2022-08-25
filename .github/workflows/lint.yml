@@ -14,7 +14,10 @@ jobs:
     steps:
       - name: Connect workflow to repository
         uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.7.1
       - name: Install all required dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
       - name: Lint and test the files
-        run: yarn lint & yarn test
+        run: pnpm run lint & pnpm run test
