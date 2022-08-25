@@ -2,17 +2,17 @@
   "name": "@namchee/telepon",
   "version": "1.0.8",
   "description": "Sane and easy-to-use Indonesian phone number validator and formatter.",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
   },
   "types": "./dist/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "build": "tsup index.ts",
+    "build": "tsup index.ts --dts --format esm,cjs --minify",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix"
   },
