@@ -1,16 +1,18 @@
-import { AmbiguousNumberException } from './exceptions/ambiguous.js';
-import { InvalidNumberException } from './exceptions/invalid.js';
+import { describe, it, expect } from 'vitest';
+
+import { AmbiguousNumberException } from './exceptions/ambiguous';
+import { InvalidNumberException } from './exceptions/invalid';
 import {
   EmergencyService,
   FixedTelepon,
   MobileTelepon,
-} from './telepon.js';
+} from './telepon';
 import {
   parse,
   parseAsEmergency,
   parseAsFixedLine,
   parseAsMobile,
-} from './parse.js';
+} from './parse';
 
 describe('parse', () => {
   // eslint-disable-next-line max-len

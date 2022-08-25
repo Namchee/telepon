@@ -1,6 +1,8 @@
-import { parseAsFixedLine, parseAsMobile } from './parse.js';
-import { Standard, format, tryFormat } from './format.js';
-import { InvalidNumberException } from './exceptions/invalid.js';
+import { describe, it, expect } from 'vitest';
+
+import { parseAsFixedLine, parseAsMobile } from './parse';
+import { Standard, format, tryFormat } from './format';
+import { InvalidNumberException } from './exceptions/invalid';
 
 describe('format', () => {
   it('should be able to format fixed line number in e.164 format', () => {
