@@ -16,16 +16,19 @@ jobs:
       - name: Checkout to repository
         uses: actions/checkout@v2
       - run: git fetch --unshallow --tags
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.7.1
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-      - name: Lint and test before release
-        run: yarn test
+        run: pnpm install
+      - name: Lint and test the files
+        run: pnpm run lint:fix & pnpm run test
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          yarn build
-          npx auto shipit
+          pnpm build
+          pnpx auto shipit
 
