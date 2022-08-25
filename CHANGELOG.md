@@ -1,3 +1,20 @@
+# v1.1.0 (Thu Aug 25 2022)
+
+#### 🚀 Enhancement
+
+- feat: migrate to vitest [#14](https://github.com/Namchee/telepon/pull/14) ([@Namchee](https://github.com/Namchee))
+
+#### 🐛 Bug Fix
+
+- chore: fix package json definition [#13](https://github.com/Namchee/telepon/pull/13) ([@Namchee](https://github.com/Namchee))
+- chore(deps): remove typesync vulnerability [#10](https://github.com/Namchee/telepon/pull/10) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.0.8 (Sat Oct 02 2021)
 
 #### 🐛 Bug Fix
