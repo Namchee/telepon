@@ -26,11 +26,11 @@ export function format(
       return `+62${number.prefix}${number.unprefixedNumber}`;
     }
 
-    const { unprefixedNumber: num } = number;
-    const splitPoint = Math.floor(number.unprefixedNumber.length / 2);
+    const { unprefixedNumber, prefix } = number;
+    const splitPoint = Math.floor(unprefixedNumber.length / 2);
 
     // eslint-disable-next-line max-len
-    return `(0${number.prefix}) ${num.slice(0, splitPoint)}${separator}${num.slice(splitPoint)}`;
+    return `(0${prefix}) ${unprefixedNumber.slice(0, splitPoint)}${separator}${unprefixedNumber.slice(splitPoint)}`;
   } else {
     if (standard === Standard.E164) {
       return `+62${number.originalNumber.slice(1)}`;

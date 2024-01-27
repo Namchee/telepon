@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-import { AmbiguousNumberException } from './exceptions/ambiguous';
-import { InvalidNumberException } from './exceptions/invalid';
+import { AmbiguousNumberError } from './errors/ambiguous';
+import { InvalidNumberError } from './errors/invalid';
 import {
   EmergencyService,
   FixedTelepon,
@@ -24,7 +24,7 @@ describe('parse', () => {
 
       throw new Error('Input is not a telephone number');
     } catch (err) {
-      expect(err).toBeInstanceOf(AmbiguousNumberException);
+      expect(err).toBeInstanceOf(AmbiguousNumberError);
     }
   });
 
@@ -135,7 +135,7 @@ describe('parse', () => {
 
       throw new Error('Input is an invalid telephone number');
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 
@@ -145,7 +145,7 @@ describe('parse', () => {
 
       parse(input);
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 });
@@ -170,7 +170,7 @@ describe('parseAsEmergency', () => {
 
       throw new Error('Input is not an emergency service number');
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 });
@@ -217,7 +217,7 @@ describe('parseAsFixedLine', () => {
 
       throw new Error('Input is not a fixed line number');
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 
@@ -227,7 +227,7 @@ describe('parseAsFixedLine', () => {
 
       parse(input);
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 });
@@ -264,7 +264,7 @@ describe('parseAsMobile', () => {
 
       throw new Error('Input is not a mobile number');
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 });

@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest';
 
 import { parseAsFixedLine, parseAsMobile } from './parse';
 import { Standard, format, tryFormat } from './format';
-import { InvalidNumberException } from './exceptions/invalid';
+
+import { InvalidNumberError } from './errors/invalid';
 
 describe('format', () => {
   it('should be able to format fixed line number in e.164 format', () => {
@@ -87,7 +88,7 @@ describe('tryFormat', () => {
 
       throw new Error('Input is not a number');
     } catch (err) {
-      expect(err).toBeInstanceOf(InvalidNumberException);
+      expect(err).toBeInstanceOf(InvalidNumberError);
     }
   });
 

@@ -1,6 +1,13 @@
 .editorconfig
-.eslintrc.cjs
-jest.config.ts
-prettier.config.js
-.github
 .autorc
+
+eslint.config.js
+.eslintrc.cjs
+
+vitest.config.ts
+
+.github
+tsconfig.json
+
+CHANGELOG.md
+src
