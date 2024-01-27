@@ -1,5 +1,5 @@
-import { AmbiguousNumberException } from './exceptions/ambiguous';
-import { InvalidNumberException } from './exceptions/invalid';
+import { AmbiguousNumberError } from './errors/ambiguous';
+import { InvalidNumberError } from './errors/invalid';
 import {
   CARD_PROVIDER,
   NOMOR_DARURAT,
@@ -20,24 +20,24 @@ import {
  * @returns {string} sanitized phone number string
  */
 function precheck(tel: string): string {
-  let input = tel.replace(/[^\d\s\-\+]/g, '');
+  let input = tel.replaceAll(/[^\d\s+\-]/g, '');
 
   if (input.startsWith('+') && input.slice(1, 3) !== '62') {
-    throw new AmbiguousNumberException();
+    throw new AmbiguousNumberError();
   }
 
   if (input.startsWith('+62')) {
     input = `0${input.slice(3)}`;
   }
 
-  input = input.replace(/[^\d]/g, '');
+  input = input.replaceAll(/\D/g, '');
 
   if (input.startsWith('62')) {
     input = `0${input.slice(2)}`;
   }
 
   if (!input.startsWith('0')) {
-    throw new AmbiguousNumberException();
+    throw new AmbiguousNumberError();
   }
 
   return input;
@@ -51,9 +51,7 @@ function precheck(tel: string): string {
  * information
  */
 export function parse(tel: string): Telepon {
-  const emergencyNumber = isEmergencyLine(
-    tel.replace(/[^\d]/, ''),
-  );
+  const emergencyNumber = isEmergencyLine(tel.replace(/\D/, ''));
 
   if (emergencyNumber) {
     return emergencyNumber;
@@ -67,7 +65,7 @@ export function parse(tel: string): Telepon {
     return number;
   }
 
-  throw new InvalidNumberException();
+  throw new InvalidNumberError();
 }
 
 /**
@@ -78,7 +76,7 @@ export function parse(tel: string): Telepon {
  * information
  */
 export function parseAsEmergency(tel: string): EmergencyService {
-  const input = tel.replace(/[^\d]/g, '');
+  const input = tel.replaceAll(/\D/g, '');
 
   const emergencyNumber = isEmergencyLine(input);
 
@@ -86,7 +84,7 @@ export function parseAsEmergency(tel: string): EmergencyService {
     return emergencyNumber;
   }
 
-  throw new InvalidNumberException();
+  throw new InvalidNumberError();
 }
 
 /**
@@ -105,7 +103,7 @@ export function parseAsFixedLine(tel: string): FixedTelepon {
     return fixedLine;
   }
 
-  throw new InvalidNumberException();
+  throw new InvalidNumberError();
 }
 
 
@@ -125,7 +123,7 @@ export function parseAsMobile(tel: string): MobileTelepon {
     return mobile;
   }
 
-  throw new InvalidNumberException();
+  throw new InvalidNumberError();
 }
 
 /**
@@ -164,10 +162,10 @@ function isFixedLine(tel: string): FixedTelepon | null {
     const unprefixed = tel.slice(prefix.length);
 
     if (
-      tel.startsWith(prefix) &&
-      [10, 11].includes(tel.length) &&
-      unprefixed[0] !== '0' &&
-      unprefixed[1] !== '1'
+      tel.startsWith(prefix)
+      && [10, 11].includes(tel.length)
+      && unprefixed[0] !== '0'
+      && unprefixed[1] !== '1'
     ) {
       return {
         type: 'fixed',
@@ -175,7 +173,7 @@ function isFixedLine(tel: string): FixedTelepon | null {
         originalNumber: tel,
         prefix: prefix.slice(1),
         area: Number(prefix[1]),
-        region,
+        region: region,
       };
     }
   }
@@ -209,7 +207,7 @@ function isMobileNumber(tel: string): MobileTelepon | null {
       return {
         type: 'mobile',
         originalNumber: tel,
-        card,
+        card: card,
         provider: providerName,
       };
     }

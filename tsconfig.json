@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2015",
     "lib": [
       "ES2019.Array",
-      "ES2020.Promise"
+      "ES2020.Promise",
+      "ES2021.String"
     ],
     "module": "ESNext",
     "outDir": "./dist",
@@ -19,11 +20,11 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
-    "index.ts",
+    "index.ts"
   ],
   "exclude": [
     "src/**/*.test.ts",

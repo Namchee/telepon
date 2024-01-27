@@ -1,6 +1,7 @@
 {
   "name": "@namchee/telepon",
   "version": "1.1.0",
+  "type": "module",
   "description": "Sane and easy-to-use Indonesian phone number validator and formatter.",
   "main": "./dist/index.js",
   "exports": {
@@ -36,25 +37,24 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@auto-it/conventional-commits": "^10.37.4",
-    "@auto-it/npm": "^10.37.4",
+    "@auto-it/conventional-commits": "^11.0.4",
+    "@auto-it/npm": "^11.0.4",
+    "@namchee/eslint-config": "^2.0.9",
     "@types/node": "^18.7.13",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "auto": "^10.37.4",
-    "eslint": "^7.19.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-jsdoc": "^31.6.1",
-    "tsup": "^6.2.2",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.9",
-    "vitest": "^0.22.1"
+    "auto": "^11.0.4",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "engines": {
-    "node": ">=14.16.0"
+    "node": ">=16",
+    "pnpm": ">=8",
+    "npm": "please-use-pnpm",
+    "yarn": "please-use-pnpm"
   }
 }
