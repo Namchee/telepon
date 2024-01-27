@@ -1,3 +1,15 @@
+# v1.1.1 (Sat Jan 27 2024)
+
+#### 🐛 Bug Fix
+
+- chore: dependency update [#15](https://github.com/Namchee/telepon/pull/15) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.1.0 (Thu Aug 25 2022)
 
 #### 🚀 Enhancement
