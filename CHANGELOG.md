@@ -1,3 +1,16 @@
+# v1.1.1 (Sun Jan 28 2024)
+
+#### 🐛 Bug Fix
+
+- fix(package): update exports definition [#17](https://github.com/Namchee/telepon/pull/17) ([@Namchee](https://github.com/Namchee))
+- chore: dependency update [#15](https://github.com/Namchee/telepon/pull/15) ([@Namchee](https://github.com/Namchee))
+
+#### Authors: 1
+
+- Cristopher ([@Namchee](https://github.com/Namchee))
+
+---
+
 # v1.1.0 (Thu Aug 25 2022)
 
 #### 🚀 Enhancement
