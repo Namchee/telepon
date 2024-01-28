@@ -2,8 +2,7 @@
 
 > Telepon is a sane and easy-to-use JavaScript library to parse and format Indonesian telephone number from a string.
 
-[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts) [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/) ![devDependecies](https://img.shields.io/david/dev/namchee/telepon) ![Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/namchee/telepon)
-
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
 
 Parsing and formatting telephone number can be such an ass sometimes. Moreover, there's no way you can assume phone number validity just from their length and `0` prefix. Simply put, validating a phone number is not an easy task as you have consider all standards involved.
 
@@ -28,68 +27,68 @@ npm install @namchee/telepon
 
 ## Data Types
 
-**Name** | **Description**
----- | -----------
-`EmergencyService` | An emergency service number, such as law enforcement, firefighter, etc.
-`FixedTelepon` | A fixed line telephone number
-`MobileTelepon` | A mobile cellular telephone number
+| **Name**           | **Description**                                                         |
+| ------------------ | ----------------------------------------------------------------------- |
+| `EmergencyService` | An emergency service number, such as law enforcement, firefighter, etc. |
+| `FixedTelepon`     | A fixed line telephone number                                           |
+| `MobileTelepon`    | A mobile cellular telephone number                                      |
 
 ### Common Properties
 
 These properties exists in all kind of `telepon`
 
-**Name** | **Value** | **Description**
----- | ----- | -----------
-`type` | `emergency \| fixed \| mobile` | Number type
-`originalNumber` | `string` | Represents parsed but unmodified telephone number
+| **Name**         | **Value**                      | **Description**                                   |
+| ---------------- | ------------------------------ | ------------------------------------------------- |
+| `type`           | `emergency \| fixed \| mobile` | Number type                                       |
+| `originalNumber` | `string`                       | Represents parsed but unmodified telephone number |
 
 ### `EmergencyService` Properties
 
 These properties only exist in `EmergencyService`
 
-**Name** | **Value** | **Description**
----- | ----- | -----------
-`type` | `emergency` | Self explanatory
-`description` | `string` | Describes what kind of service that the number provides
+| **Name**      | **Value**   | **Description**                                         |
+| ------------- | ----------- | ------------------------------------------------------- |
+| `type`        | `emergency` | Self explanatory                                        |
+| `description` | `string`    | Describes what kind of service that the number provides |
 
 ### `FixedTelepon` Properties
 
 These properties only exist in `FixedTelepon`
 
-**Name** | **Value** | **Description**
----- | ----- | -----------
-`type` | `fixed` | Self explanatory
-`unprefixedNumber` | `string` | Telephone number without prefix
-`prefix` | `string` | Region prefix
-`region` | `string[]` | List of possible regions
-`area` | `number` | Area code
+| **Name**           | **Value**  | **Description**                 |
+| ------------------ | ---------- | ------------------------------- |
+| `type`             | `fixed`    | Self explanatory                |
+| `unprefixedNumber` | `string`   | Telephone number without prefix |
+| `prefix`           | `string`   | Region prefix                   |
+| `region`           | `string[]` | List of possible regions        |
+| `area`             | `number`   | Area code                       |
 
 ### `MobileTelepon` Properties
 
 These properties only exist in `MobileTelepon`
 
-**Name** | **Value** | **Description**
----- | ----- | -----------
-`type` | `mobile` | Self explanatory
-`card` | `string` | Card type
-`provider` | `string` | Service provider
+| **Name**   | **Value** | **Description**  |
+| ---------- | --------- | ---------------- |
+| `type`     | `mobile`  | Self explanatory |
+| `card`     | `string`  | Card type        |
+| `provider` | `string`  | Service provider |
 
 ### Standard
 
 To enhance formatting capabilites, this package provides an `enum` named `Standard` which lists all supported formattings on this package.
 
-**Name** | **Description**
----- | -----------
-`Standard.E164` | Format the number using the [E.164 Standard](https://www.itu.int/rec/T-REC-E.164/en). This is the default value.
-`Standard.LOCAL` | Format the number using a commonly used format, which is `(<region_prefix>) xxxx xxxx`
-`Standard.DASHED` | Same as `Standard.LOCAL`, but separated with dash `-`.
+| **Name**          | **Description**                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `Standard.E164`   | Format the number using the [E.164 Standard](https://www.itu.int/rec/T-REC-E.164/en). This is the default value. |
+| `Standard.LOCAL`  | Format the number using a commonly used format, which is `(<region_prefix>) xxxx xxxx`                           |
+| `Standard.DASHED` | Same as `Standard.LOCAL`, but separated with dash `-`.                                                           |
 
 ### Errors
 
-**Name** | **Description**
----- | -----------
-`AmbiguousNumberException` | Thrown when the number doesn't start with `0` or `+62` (if its not an `EmergencyService`)
-`InvalidNumberException` | Thrown when the number is not a valid phone number in Indonesia.
+| **Name**               | **Description**                                                                           |
+| ---------------------- | ----------------------------------------------------------------------------------------- |
+| `AmbiguousNumberError` | Thrown when the number doesn't start with `0` or `+62` (if its not an `EmergencyService`) |
+| `InvalidNumberError`   | Thrown when the number is not a valid phone number in Indonesia.                          |
 
 ## Functions
 ### `parse(number: string)`
