@@ -11,7 +11,8 @@
       "src/**/*.ts"
     ],
     "exclude": [
-      "src/**/!(*.test).ts"
+      "src/**/format.test.ts",
+      "src/**/parser.test.ts"
     ]
   }
 }
