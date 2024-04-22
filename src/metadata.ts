@@ -1,12 +1,12 @@
 // nomor panggilan darurat
 export const NOMOR_DARURAT = {
-  '110': 'Polisi',
-  '112': 'Layanan Darurat',
-  '113': 'Pemadam Kebakaran',
-  '115': 'SAR',
-  '118': 'Ambulans',
-  '119': 'Kegawatdaruratan Kesehatan',
-  '123': 'PLN',
+  110: 'Polisi',
+  112: 'Layanan Darurat',
+  113: 'Pemadam Kebakaran',
+  115: 'SAR',
+  118: 'Ambulans',
+  119: 'Kegawatdaruratan Kesehatan',
+  123: 'PLN',
 };
 
 // Daftar prefix untuk nomor telepon
