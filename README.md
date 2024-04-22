@@ -19,10 +19,23 @@ With `telepon`, not only you can format phone number easily, you can also parse 
 
 ## Installation
 
-Install this package with your favorite package manager like
+Install this package with your favorite package manager:
 
 ```shell
+# using npm
 npm install @namchee/telepon
+
+# using yarn
+yarn add @namchee/telepon
+
+# using pnpm
+pnpm add @namchee/telepon
+
+# using bun
+bun install @namchee/telepon
+
+# using JSR
+npx jsr add @namchee/telepon
 ```
 
 ## Data Types
